@@ -96,50 +96,6 @@ class UserQueryHelper(private val db: SQLiteDatabase) {
         return userData
     }
 
-    fun insertUser(
-        name: String,
-        email: String,
-        password: String,
-        sexo: String,
-        telefono: String,
-        numeroCuenta: String,
-        banco: String,
-        dni: String,
-        fechaNacimiento: String,
-        jefe: String,
-        direccion: String,
-        distrito: String,
-        condicion: String,
-        cargo: String,
-        rol: String,
-        fechaCreacion: String,
-        ultimaActualizacion: String,
-        estadoCuenta: String,
-        imagenPerfil: String
-    ): Long {
-        val contentValues = ContentValues().apply {
-            put("nombres", name)
-            put("correo", email)
-            put("contrasena", password)
-            put("sexo", sexo)
-            put("telefono", telefono)
-            put("numeroCuenta", numeroCuenta)
-            put("banco", banco)
-            put("dni", dni)
-            put("fechaNacimiento", fechaNacimiento)
-            put("jefe", jefe)
-            put("direccion", direccion)
-            put("distrito", distrito)
-            put("condicion", condicion)
-            put("cargo", cargo)
-            put("rol", rol)
-            put("fechaCreacion", fechaCreacion)
-            put("ultimaActualizacion", ultimaActualizacion)
-            put("estadoCuenta", estadoCuenta)
-            put("imagenPerfil", imagenPerfil)
-        }
 
-        return db.insert("User", null, contentValues)
-    }
 
 }

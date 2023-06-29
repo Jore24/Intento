@@ -5,14 +5,16 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import android.database.sqlite.SQLiteDatabase
 import com.cursoklotin.intento.R
-import com.cursoklotin.intento.bd.DatabaseHelper
-import com.cursoklotin.intento.bd.services.UserQueryHelper
-import com.cursoklotin.intento.utils.DateTimeUtils.getCurrentDateTime
 import com.cursoklotin.intento.UserData
+import com.cursoklotin.intento.bd.services.AdminQueryHelper
+import com.cursoklotin.intento.utils.DateTimeUtils.getCurrentDateTime
+import android.database.sqlite.SQLiteDatabase
+import com.cursoklotin.intento.bd.DatabaseHelper
+
 
 class RegistrarUserActivity : AppCompatActivity() {
+
     private lateinit var dbHelper: DatabaseHelper
     private lateinit var db: SQLiteDatabase
     private lateinit var etAdminName: EditText
@@ -88,7 +90,7 @@ class RegistrarUserActivity : AppCompatActivity() {
         val imagenPerfil = "" // Dejar la imagen de perfil en blanco inicialmente
 
         if (nombres.isNotEmpty() && correo.isNotEmpty() && contrasena.isNotEmpty() && sexo.isNotEmpty()) {
-            val userQueryHelper = UserQueryHelper(db)
+            val adminQueryHelper = AdminQueryHelper(db)
 
             val userData = UserData(
                 id = 0, // El ID se generará automáticamente en la base de datos
@@ -113,7 +115,7 @@ class RegistrarUserActivity : AppCompatActivity() {
                 imagenPerfil = imagenPerfil
             )
 
-            if (userQueryHelper.insertUser(
+            if (adminQueryHelper.insertUser(
                     name = userData.nombres,
                     email = userData.correo,
                     password = userData.contrasena,
