@@ -46,92 +46,92 @@ class ActualizarUserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.admin_actualizar_user)
-
-        dbHelper = DatabaseHelper(this)
-        db = dbHelper.writableDatabase
-
-        adminQueryHelper = AdminQueryHelper(db)
-        userQueryHelper = UserQueryHelper(db)
-
-
-        // Obtener el ID del usuario desde el intent
-        //val userId = intent.getIntExtra("userId", -1)
-        val userId = 3
-        // Verificar si se proporcionó un ID válido
-        if (userId != -1) {
-            // Realizar consulta para obtener los datos del usuario por su ID
-            usuario = userQueryHelper.getUserById(userId) ?: throw IllegalArgumentException("No se encontró el usuario con el ID proporcionado")
-
-            // Verificar si el usuario no es nulo antes de asignar los datos
-            if (usuario != null) {
-                // Asignar los datos del usuario a los campos de texto correspondientes
-                asignarDatosUsuario(usuario)
-            } else {
-                // Mostrar mensaje de error si el usuario es nulo
-                Toast.makeText(this, "No se encontró el usuario con el ID proporcionado", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-        } else {
-            // Mostrar mensaje de error si no se proporcionó un ID válido
-            Toast.makeText(this, "ID de usuario inválido", Toast.LENGTH_SHORT).show()
-            finish()
-        }
-
-
-        // Configurar el botón de actualización
-        buttonActualizar = findViewById(R.id.buttonActualizarUsuario)
-        buttonActualizar.setOnClickListener {
-            // Obtener los nuevos valores de los campos de texto
-            val nuevoNombres = editTextNombres.text.toString()
-            val nuevoCorreo = editTextCorreo.text.toString()
-            val nuevoContrasena = editTextContrasena.text.toString()
-            val nuevoSexo = editTextSexo.text.toString()
-            val nuevoTelefono = editTextTelefono.text.toString()
-            val nuevoNumeroCuenta = editTextNumeroCuenta.text.toString()
-            val nuevoBanco = editTextBanco.text.toString()
-            val nuevoDni = editTextDni.text.toString()
-            val nuevaFechaNacimiento = editTextFechaNacimiento.text.toString()
-            val nuevoJefe = editTextJefe.text.toString()
-            val nuevaDireccion = editTextDireccion.text.toString()
-            val nuevoDistrito = editTextDistrito.text.toString()
-            val nuevaCondicion = editTextCondicion.text.toString()
-            val nuevoCargo = editTextCargo.text.toString()
-            val nuevoRol = editTextRol.text.toString()
-            val nuevoEstadoCuenta = editTextEstadoCuenta.text.toString()
-            val nuevaImagenPerfil = editTextImagenPerfil.text.toString()
-
-            // Actualizar los datos del usuario en la base de datos
-            val exito = adminQueryHelper.actualizarUsuarioPorId(
-                usuario.id,
-                nuevoNombres,
-                nuevoCorreo,
-                nuevoContrasena,
-                nuevoSexo,
-                nuevoTelefono,
-                nuevoNumeroCuenta,
-                nuevoBanco,
-                nuevoDni,
-                nuevaFechaNacimiento,
-                nuevoJefe,
-                nuevaDireccion,
-                nuevoDistrito,
-                nuevaCondicion,
-                nuevoCargo,
-                nuevoRol,
-                usuario.fechaCreacion,
-                DateTimeUtils.getCurrentDateTime(),
-                nuevoEstadoCuenta,
-                nuevaImagenPerfil
-            )
-
-            // Mostrar mensaje de éxito o error según el resultado de la actualización
-            if (exito) {
-                Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show()
-                finish()
-            } else {
-                Toast.makeText(this, "Error al actualizar el usuario", Toast.LENGTH_SHORT).show()
-            }
-        }
+//
+//        dbHelper = DatabaseHelper(this)
+//        db = dbHelper.writableDatabase
+//
+//        adminQueryHelper = AdminQueryHelper(db)
+//        userQueryHelper = UserQueryHelper(db)
+//
+//
+//        // Obtener el ID del usuario desde el intent
+//        //val userId = intent.getIntExtra("userId", -1)
+//        val userId = 3
+//        // Verificar si se proporcionó un ID válido
+//        if (userId != -1) {
+//            // Realizar consulta para obtener los datos del usuario por su ID
+//            usuario = userQueryHelper.getUserById(userId) ?: throw IllegalArgumentException("No se encontró el usuario con el ID proporcionado")
+//
+//            // Verificar si el usuario no es nulo antes de asignar los datos
+//            if (usuario != null) {
+//                // Asignar los datos del usuario a los campos de texto correspondientes
+//                asignarDatosUsuario(usuario)
+//            } else {
+//                // Mostrar mensaje de error si el usuario es nulo
+//                Toast.makeText(this, "No se encontró el usuario con el ID proporcionado", Toast.LENGTH_SHORT).show()
+//                finish()
+//            }
+//        } else {
+//            // Mostrar mensaje de error si no se proporcionó un ID válido
+//            Toast.makeText(this, "ID de usuario inválido", Toast.LENGTH_SHORT).show()
+//            finish()
+//        }
+//
+//
+//        // Configurar el botón de actualización
+//        buttonActualizar = findViewById(R.id.buttonActualizarUsuario)
+//        buttonActualizar.setOnClickListener {
+//            // Obtener los nuevos valores de los campos de texto
+//            val nuevoNombres = editTextNombres.text.toString()
+//            val nuevoCorreo = editTextCorreo.text.toString()
+//            val nuevoContrasena = editTextContrasena.text.toString()
+//            val nuevoSexo = editTextSexo.text.toString()
+//            val nuevoTelefono = editTextTelefono.text.toString()
+//            val nuevoNumeroCuenta = editTextNumeroCuenta.text.toString()
+//            val nuevoBanco = editTextBanco.text.toString()
+//            val nuevoDni = editTextDni.text.toString()
+//            val nuevaFechaNacimiento = editTextFechaNacimiento.text.toString()
+//            val nuevoJefe = editTextJefe.text.toString()
+//            val nuevaDireccion = editTextDireccion.text.toString()
+//            val nuevoDistrito = editTextDistrito.text.toString()
+//            val nuevaCondicion = editTextCondicion.text.toString()
+//            val nuevoCargo = editTextCargo.text.toString()
+//            val nuevoRol = editTextRol.text.toString()
+//            val nuevoEstadoCuenta = editTextEstadoCuenta.text.toString()
+//            val nuevaImagenPerfil = editTextImagenPerfil.text.toString()
+//
+//            // Actualizar los datos del usuario en la base de datos
+//            val exito = adminQueryHelper.actualizarUsuarioPorId(
+//                usuario.id,
+//                nuevoNombres,
+//                nuevoCorreo,
+//                nuevoContrasena,
+//                nuevoSexo,
+//                nuevoTelefono,
+//                nuevoNumeroCuenta,
+//                nuevoBanco,
+//                nuevoDni,
+//                nuevaFechaNacimiento,
+//                nuevoJefe,
+//                nuevaDireccion,
+//                nuevoDistrito,
+//                nuevaCondicion,
+//                nuevoCargo,
+//                nuevoRol,
+//                usuario.fechaCreacion,
+//                DateTimeUtils.getCurrentDateTime(),
+//                nuevoEstadoCuenta,
+//                nuevaImagenPerfil
+//            )
+//
+//            // Mostrar mensaje de éxito o error según el resultado de la actualización
+//            if (exito) {
+//                Toast.makeText(this, "Usuario actualizado correctamente", Toast.LENGTH_SHORT).show()
+//                finish()
+//            } else {
+//                Toast.makeText(this, "Error al actualizar el usuario", Toast.LENGTH_SHORT).show()
+//            }
+//        }
     }
 
     private fun asignarDatosUsuario(usuario: UserData?) {

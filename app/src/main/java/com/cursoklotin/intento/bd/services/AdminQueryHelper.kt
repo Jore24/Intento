@@ -9,6 +9,7 @@ import android.util.Log
 
 class AdminQueryHelper(private val db: SQLiteDatabase) {
 
+
     fun insertUser(
         name: String,
         email: String,

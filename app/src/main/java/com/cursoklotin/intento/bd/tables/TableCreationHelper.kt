@@ -6,8 +6,66 @@ import android.database.sqlite.SQLiteDatabase
 class TableCreationHelper(private val db: SQLiteDatabase) {
     fun createTables() {
         createUserTable()
+        createCargoTable()
+        createEmpleadoTable()
         createRegistrarAsistenciaTable()
         createQRTable()
+        createPersonaTable()
+    }
+
+
+    private fun createPersonaTable() {
+        val query = """
+        CREATE TABLE IF NOT EXISTS Persona (
+            idPersona INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombres TEXT,
+            sexo TEXT,
+            telefono TEXT,
+            numeroCuenta TEXT,
+            banco TEXT,
+            fechaNacimiento TEXT,
+            direccion TEXT,
+            distrito TEXT,
+            fechaCreacion TEXT,
+            ultimaActualizacion TEXT
+        )
+    """.trimIndent()
+
+        db.execSQL(query)
+    }
+
+    private fun createCargoTable() {
+        val query = """
+        CREATE TABLE IF NOT EXISTS Cargo (
+            idCargo INTEGER PRIMARY KEY AUTOINCREMENT,
+            cargo TEXT,
+            sueldo INTEGER,
+            condicion TEXT
+        )
+    """.trimIndent()
+
+        db.execSQL(query)
+    }
+
+    private fun createEmpleadoTable() {
+        val query = """
+        CREATE TABLE IF NOT EXISTS Empleado (
+            idEmpleado INTEGER PRIMARY KEY AUTOINCREMENT,
+            correo TEXT,
+            contrasena TEXT,
+            rol INTEGER,
+            fechaInicio TEXT,
+            fechaFin TEXT,
+            jefe TEXT,
+            estadoCuenta TEXT,
+            personaId INTEGER,
+            cargoId INTEGER,
+            FOREIGN KEY (personaId) REFERENCES Persona (idPersona),
+            FOREIGN KEY (cargoId) REFERENCES Cargo (idCargo)
+        )
+    """.trimIndent()
+
+        db.execSQL(query)
     }
 
     private fun createUserTable() {
@@ -39,7 +97,6 @@ class TableCreationHelper(private val db: SQLiteDatabase) {
 
         db.execSQL(query)
     }
-
     private fun createRegistrarAsistenciaTable() {
         val query = """
             CREATE TABLE IF NOT EXISTS RegistrarAsistencia (

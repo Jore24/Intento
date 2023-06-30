@@ -1,6 +1,9 @@
 package com.cursoklotin.intento.bd.insertion
 import com.cursoklotin.intento.QRData
 import com.cursoklotin.intento.UserData
+import com.cursoklotin.intento.models.CargoData
+import com.cursoklotin.intento.models.EmpleadoData
+import com.cursoklotin.intento.models.PersonaData
 import com.cursoklotin.intento.RegistroAsistenciaData
 
 
@@ -13,7 +16,138 @@ class DataInsertionHelper(private val db: SQLiteDatabase) {
         insertUserData()
         insertRegistroAsistenciaData()
         insertQRData()
+        insertCargoData()//1
+        insertData()//2
+
     }
+
+    private fun insertCargoData() {
+        val cargos = arrayOf(
+            CargoData(
+                idCargo = -1,
+                cargo = "Gerente",
+                sueldo = 5000,
+                condicion = "Full Time"
+            ),
+            CargoData(
+                idCargo = -1,
+                cargo = "Empleado",
+                sueldo = 1205,
+                condicion = "Part Time"
+            ),
+            CargoData(
+                idCargo = -1,
+                cargo = "Asistente",
+                sueldo = 1551,
+                condicion = "Full Time"
+            )
+            // Agrega más datos de ejemplo aquí según tus necesidades
+        )
+
+        for (cargo in cargos) {
+            val values = ContentValues()
+            values.put("cargo", cargo.cargo)
+            values.put("sueldo", cargo.sueldo)
+            values.put("condicion", cargo.condicion)
+
+            db.insert("Cargo", null, values)
+        }
+    }
+
+
+    private fun insertData() {
+        // Insertar datos en la tabla Persona
+        val personas = arrayOf(
+            PersonaData(
+                idPersona = -1,
+                nombres = "John Doeaaaaaa",
+                sexo = "Masculino",
+                telefono = "987612588",
+                numeroCuenta = "894144444441111122233",
+                banco = "BCP",
+                fechaNacimiento = "1990-01-01",
+                direccion = "Dirección A",
+                distrito = "Distrito A",
+                fechaCreacion = "Fecha Creación",
+                ultimaActualizacion = "Ultima Actualización"
+            ),
+            PersonaData(
+                idPersona = -1,
+                nombres = "Jane Smith",
+                sexo = "Femenino",
+                telefono = "987612588",
+                numeroCuenta = "894144444441111122233",
+                banco = "BCP",
+                fechaNacimiento = "1990-01-01",
+                direccion = "Dirección A",
+                distrito = "Distrito A",
+                fechaCreacion = "Fecha Creación",
+                ultimaActualizacion = "Ultima Actualización"
+            )
+            // Agrega más datos de ejemplo aquí según tus necesidades
+        )
+
+        for (persona in personas) {
+            val values = ContentValues()
+            values.put("nombres", persona.nombres)
+            values.put("sexo", persona.sexo)
+            values.put("telefono", persona.telefono)
+            values.put("numeroCuenta", persona.numeroCuenta)
+            values.put("banco", persona.banco)
+            values.put("fechaNacimiento", persona.fechaNacimiento)
+            values.put("direccion", persona.direccion)
+            values.put("distrito", persona.distrito)
+            values.put("fechaCreacion", persona.fechaCreacion)
+            values.put("ultimaActualizacion", persona.ultimaActualizacion)
+
+            val personaId = db.insert("Persona", null, values)
+
+            // Insertar datos en la tabla Empleado
+            val empleados = arrayOf(
+                EmpleadoData(
+                    idEmpleado = -1,
+                    correo = "jore@",
+                    contrasena = "123",
+                    rol = 1,
+                    fechaInicio = "Fecha Inicio",
+                    fechaFin = "Fecha Fin",
+                    jefe = "Jefe A",
+                    estadoCuenta = "Activo-Inactivo",
+                    personaId = personaId.toInt(),
+                    cargoId = 1 // ID del cargo correspondiente
+                ),
+                EmpleadoData(
+                    idEmpleado = -1,
+                    correo = "jane@",
+                    contrasena = "123",
+                    rol = 2,
+                    fechaInicio = "Fecha Inicio",
+                    fechaFin = "Fecha Fin",
+                    jefe = "Jefe A",
+                    estadoCuenta = "Activo-Inactivo",
+                    personaId = personaId.toInt(),
+                    cargoId = 2 // ID del cargo correspondiente
+                )
+                // Agrega más datos de ejemplo aquí según tus necesidades
+            )
+
+            for (empleado in empleados) {
+                values.clear()
+                values.put("correo", empleado.correo)
+                values.put("contrasena", empleado.contrasena)
+                values.put("rol", empleado.rol)
+                values.put("fechaInicio", empleado.fechaInicio)
+                values.put("fechaFin", empleado.fechaFin)
+                values.put("jefe", empleado.jefe)
+                values.put("estadoCuenta", empleado.estadoCuenta)
+                values.put("personaId", empleado.personaId)
+                values.put("cargoId", empleado.cargoId)
+
+                db.insert("Empleado", null, values)
+            }
+        }
+    }
+
 
     private fun insertUserData() {
         val userData = arrayOf(

@@ -7,6 +7,11 @@ import android.widget.EditText
 import android.widget.Toast
 import com.cursoklotin.intento.R
 import com.cursoklotin.intento.UserData
+import com.cursoklotin.intento.models.CargoData
+import com.cursoklotin.intento.models.PersonaData
+import com.cursoklotin.intento.models.EmpleadoData
+
+
 import com.cursoklotin.intento.bd.services.AdminQueryHelper
 import com.cursoklotin.intento.utils.DateTimeUtils.getCurrentDateTime
 import android.database.sqlite.SQLiteDatabase

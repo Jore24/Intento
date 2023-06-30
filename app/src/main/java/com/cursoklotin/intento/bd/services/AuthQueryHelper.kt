@@ -6,31 +6,35 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.database.Cursor
 import com.cursoklotin.intento.UserData
+import com.cursoklotin.intento.models.EmpleadoData
 import android.util.Log
 
 
 
 class AuthQueryHelper(private val db: SQLiteDatabase) {
-    fun login(email: String, password: String): Int {
-        val projection = arrayOf("id")
+    fun login(email: String, password: String): Pair<Int, String> {
+        val projection = arrayOf("personaId", "rol")
         val selection = "correo = ? AND contrasena = ?"
         val selectionArgs = arrayOf(email, password)
 
-        val cursor: Cursor = db.query("User", projection, selection, selectionArgs, null, null, null)
+        val cursor: Cursor = db.query("Empleado", projection, selection, selectionArgs, null, null, null)
 
-        val userId: Int
-
-        userId = if (cursor.moveToFirst()) {
-            val userId = cursor.getInt(cursor.getColumnIndex("id"))
-            Log.d("AuthQueryHelper", "UserID: $userId") // Agregar mensaje de depuración
-            userId
+        val result: Pair<Int, String> = if (cursor.moveToFirst()) {
+            val personaId = cursor.getInt(cursor.getColumnIndex("personaId"))
+            val rol = cursor.getString(cursor.getColumnIndex("rol"))
+            personaId to rol
         } else {
-            -1
+            -1 to ""
         }
         cursor.close()
-        return userId
+        return result
     }
+
+
 }
+
+
+
 //    fun register(adminId: Int, userData: UserData): Boolean {
 //        val adminUser = getUserById(adminId)
 //        if (adminUser != null && adminUser.isAdmin) {

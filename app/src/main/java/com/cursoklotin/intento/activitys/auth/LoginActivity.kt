@@ -11,7 +11,9 @@ import com.cursoklotin.intento.managers.UserManager
 import com.cursoklotin.intento.bd.DatabaseHelper
 import com.cursoklotin.intento.bd.services.UserQueryHelper
 import com.cursoklotin.intento.bd.services.AuthQueryHelper
+import com.cursoklotin.intento.bd.services.PersonQueryHelper
 import com.cursoklotin.intento.activitys.admin.HomeAdminActivity
+
 
 
 class LoginActivity : AppCompatActivity() {
@@ -41,17 +43,17 @@ class LoginActivity : AppCompatActivity() {
             val db: SQLiteDatabase = databaseHelper.writableDatabase
 
             val authQueryHelper = AuthQueryHelper(db)
-            val userId = authQueryHelper.login(email, password)
+            val (personaId, rol) = authQueryHelper.login(email, password)
 
-            val userQueryHelper = UserQueryHelper(db)
-            val userData = userQueryHelper.getUserById(userId)
+            val personQueryHelper = PersonQueryHelper(db)
+            val personData = personQueryHelper.getPersonById(personaId)
 
-            if (userId != -1) {
+            if (personaId != -1) {
                 // El inicio de sesión fue exitoso, pasar el ID del usuario a la siguiente actividad
-                userManager.userId = userId
-                userManager.userData = userData
+                userManager.userId = personaId
+                userManager.personaData = personData
 
-                if (userData?.rol == "2"){ // 2 es el rol de administrador
+                if (rol == "2"){ // 2 es el rol de administrador
                     val intent = Intent(this, HomeAdminActivity::class.java)
                     startActivity(intent)
                 } else {

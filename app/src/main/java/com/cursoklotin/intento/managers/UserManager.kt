@@ -1,8 +1,10 @@
 package com.cursoklotin.intento.managers
+
 import android.content.Context
 import android.content.SharedPreferences
-import com.cursoklotin.intento.UserData
 import android.util.Log
+import com.cursoklotin.intento.UserData
+import com.cursoklotin.intento.models.PersonaData
 
 class UserManager private constructor(context: Context) {
     companion object {
@@ -28,51 +30,33 @@ class UserManager private constructor(context: Context) {
             sharedPreferences.edit().putInt(KEY_USER_ID, value).apply()
         }
 
-    var userData: UserData?
+    var personaData: PersonaData?
         get() {
-            val id = sharedPreferences.getInt("id", -1)
+            val idPersona = sharedPreferences.getInt("idPersona", -1)
             val nombres = sharedPreferences.getString("nombres", "") ?: ""
-            val correo = sharedPreferences.getString("correo", "") ?: ""
-            val contrasena = sharedPreferences.getString("contrasena", "") ?: ""
             val sexo = sharedPreferences.getString("sexo", "") ?: ""
             val telefono = sharedPreferences.getString("telefono", "") ?: ""
             val numeroCuenta = sharedPreferences.getString("numeroCuenta", "") ?: ""
             val banco = sharedPreferences.getString("banco", "") ?: ""
-            val dni = sharedPreferences.getString("dni", "") ?: ""
             val fechaNacimiento = sharedPreferences.getString("fechaNacimiento", "") ?: ""
-            val jefe = sharedPreferences.getString("jefe", "") ?: ""
             val direccion = sharedPreferences.getString("direccion", "") ?: ""
             val distrito = sharedPreferences.getString("distrito", "") ?: ""
-            val condicion = sharedPreferences.getString("condicion", "") ?: ""
-            val cargo = sharedPreferences.getString("cargo", "") ?: ""
-            val rol = sharedPreferences.getString("rol", "") ?: ""
             val fechaCreacion = sharedPreferences.getString("fechaCreacion", "") ?: ""
             val ultimaActualizacion = sharedPreferences.getString("ultimaActualizacion", "") ?: ""
-            val estadoCuenta = sharedPreferences.getString("estadoCuenta", "") ?: ""
-            val imagenPerfil = sharedPreferences.getString("imagenPerfil", "") ?: ""
 
-            return if (id != -1) {
-                UserData(
-                    id,
+            return if (idPersona != -1) {
+                PersonaData(
+                    idPersona,
                     nombres,
-                    correo,
-                    contrasena,
                     sexo,
                     telefono,
                     numeroCuenta,
                     banco,
-                    dni,
                     fechaNacimiento,
-                    jefe,
                     direccion,
                     distrito,
-                    condicion,
-                    cargo,
-                    rol,
                     fechaCreacion,
-                    ultimaActualizacion,
-                    estadoCuenta,
-                    imagenPerfil
+                    ultimaActualizacion
                 )
             } else {
                 null
@@ -81,26 +65,17 @@ class UserManager private constructor(context: Context) {
         set(value) {
             if (value != null) {
                 sharedPreferences.edit().apply {
-                    putInt("id", value.id)
+                    putInt("idPersona", value.idPersona)
                     putString("nombres", value.nombres)
-                    putString("correo", value.correo)
-                    putString("contrasena", value.contrasena)
                     putString("sexo", value.sexo)
                     putString("telefono", value.telefono)
                     putString("numeroCuenta", value.numeroCuenta)
                     putString("banco", value.banco)
-                    putString("dni", value.dni)
                     putString("fechaNacimiento", value.fechaNacimiento)
-                    putString("jefe", value.jefe)
                     putString("direccion", value.direccion)
                     putString("distrito", value.distrito)
-                    putString("condicion", value.condicion)
-                    putString("cargo", value.cargo)
-                    putString("rol", value.rol)
                     putString("fechaCreacion", value.fechaCreacion)
                     putString("ultimaActualizacion", value.ultimaActualizacion)
-                    putString("estadoCuenta", value.estadoCuenta)
-                    putString("imagenPerfil", value.imagenPerfil)
                     apply()
                 }
             } else {
@@ -110,19 +85,18 @@ class UserManager private constructor(context: Context) {
 
     fun isLoggedIn(): Boolean = userId != -1
 
-    fun updateUserData(nuevoCorreo: String, nuevoTelefono: String) {
-        val userData = userData ?: return
+    fun updatePersonaData(nuevosNombres: String, nuevoTelefono: String) {
+        val personaData = personaData ?: return
 
-        // Actualizar los campos de correo y teléfono
-        userData.correo = nuevoCorreo
-        userData.telefono = nuevoTelefono
+        // Actualizar los campos de nombres y teléfono
+        personaData.nombres = nuevosNombres
+        personaData.telefono = nuevoTelefono
 
-        // Guardar los nuevos datos de usuario en el estado global
-        this.userData = userData
+        // Guardar los nuevos datos de persona en el estado global
+        this.personaData = personaData
     }
 
-    fun resetUserData() {
+    fun resetPersonaData() {
         sharedPreferences.edit().clear().apply()
     }
-
 }
